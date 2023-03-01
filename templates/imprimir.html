@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% block title %} Inicio {% endblock %} {% block
+    content %}
+    <body class="text-center">
+        <p class='font-serif text-xl'> Nombre del Reportante: <span class="font-bold"> {{ datos.nombre }}</span></p>
+    
+        <p class='font-serif text-xl'>Fecha y Hora: {{ datos.fecha }} </p>
+    
+        <p class="font-bold text-3xl">Institucion: {{ datos.institucion }} </p> 
+    
+        <p class="font-serif textl-xl">Departamento: {{datos.departamento }}</p>
+    
+        <p class="font-serif textl-xl">Ciudad: {{ datos.ciudad }} </p>
+        <p class="font-bold textl-3xl">REPORTE</p>
+    
+        {% for key in datos.categorias %}
+        </br>
+           <p class="font-bold text-xl">Categoria: {{ key }} </p>
+        </br>
+       <p class="font-semibold text-xl"> Estado: {{datos.categorias[key].calificacion}}</p> 
+        {%endfor%} 
+    
+        <button  class="button">imprimir</button>
+    
+        <script>
+        const boton = document.querySelector(".button");
+    
+        boton.addEventListener("click", () => {
+          print();
+        });
+        </script>
+    
+    </body>
+    
+    
+        {% endblock %}
