@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Reporta el estado de la infraestructura de tu colegio</h1>
+    <form method="POST">
+      {{ form.hidden_tag() }}
+
+      <h1>{{user}}</h1>
+      <h2>Fecha: {{fecha}}</h2>
+      <h2>Institucion: {{inst.name}}</h2>
+      <h2>Departamento: {{inst.departamento}}</h2>
+      <h2>Ciudad: {{inst.ciudad}}</h2>
+
+      {% for tipo in tipo_denuncia %}
+      <h2>{{ tipo.name }}</h2>
+      <fieldset>
+        <label for="{{tipo.name}}_calificacion">Calificacion</label>
+        <select
+          name="{{tipo.name}}_calificacion"
+          id="{{tipo.name}}_calificacion"
+        >
+          <option value="excelente">Excelente</option>
+          <option value="normal">Normal</option>
+          <option value="choputa">Choputa</option>
+        </select>
+      </fieldset>
+      <fieldset>
+        <label for="{{tipo.name}}_descripcion">Descripcion:</label>
+        <textarea
+          name="{{tipo.name}}_descripcion"
+          id="{{tipo.name}}_descripcion"
+          cols="30"
+          rows="10"
+        ></textarea>
+      </fieldset>
+      {% endfor %} {{ form.submit() }}
+    </form>
+  </body>
+</html>

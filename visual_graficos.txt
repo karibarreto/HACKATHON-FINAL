@@ -1,0 +1,19 @@
+
+@app.route("/visual")
+def visual():
+    lista_rojos = Asistencia.query.filter_by(asistencia=0).all()
+    cantidad_rojos = len(lista_rojos)
+    
+    lista_azul = Asistencia.query.filter_by(asistencia=1).all()
+    cantidad_azul = len(lista_azul)
+    
+
+    print(cantidad_rojos)
+
+     crear diccionario
+    datos_grafica = {
+        "colores": ["Rojo", "Amarillo", "Verde"],
+        "valores": [cantidad_rojos, cantidad_azul, 45]
+    }
+    datos_grafica = json.dumps(datos_grafica)
+    return render_template("visual.html", datos_grafica=datos_grafica)

@@ -1,0 +1,94 @@
+{% extends 'base.html' %} {% block title %} Inicio {% endblock %} {% block
+content %}
+<div class="bg-[#FCF9BE] flex flex-col hero border-2 border-t-red-600 border-b-red-600">
+  <!--este es mi div padre, es todo el background-->
+  <div class="container">
+    <section class="hero_container">
+      <div class="hero_texts">
+        <h1
+          class="hero_texts font-semibold text-7xl text-[#EB6440] text-center mt-20 mb-9 drop-shadow-2xl"
+        >
+          <span class="text-[#EB6440]">Report</span><span class="text-[#0081B4]">App</span>
+        </h1>
+        <h2
+          class="hero_subtitle font-semibold text-2xl text-white text-center static dark:bg-red-600 mx-48 mb-24 rounded-lg border-2 border-[#FEBE8C] shadow-2xl shadow-[#820000]"
+        >
+          Reportes de Infraestructura de Escuelas
+        </h2>
+      </div>
+    </section>
+  </div>
+
+  <div class="flex flex-col about-section text-center text-[#395144]">
+    <!--el de arriba es el div padre-->
+    <div class="flex items-center">
+      <!--primer div hijo-->
+      <div class="flex-1">
+        <!--primera imagen y parrafo-->
+        <p class="font-semibold text-xl text-[#F7A76C] text-center mx-44 ">
+          El proyecto <span class="text-[#EB6440]">Report</span><span class="text-[#0081B4]">App</span>es una herramienta digital para realizar reclamos sobre la
+          infraestructura de las escuelas y colegios de la capital.
+        </p>
+      </div>
+      <div class="w-80 h-80 flex-2 mr-36 rounded-full shadow-2xl">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/5433/5433399.png"
+          alt="icono de escuela"
+        />
+      </div>
+    </div>
+
+    <div class="flex items-center">
+      <!--segundo div hijo-->
+      <div class="w-56 h-56 flex-2 ml-36 rounded-full shadow-2xl">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/3447/3447560.png"
+          alt="icono de un formulario"
+        />
+      </div>
+      <div class="flex-1">
+        <p class="font-semibold text-xl text-[#F7A76C] text-center mx-44">
+          Consiste en completar un formularios de manera a informar y documentar del estado de
+          las infraestructuras.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-center">
+      <!--tercer div hijo-->
+      <div class="flex-1">
+        <p class="font-semibold text-xl text-[#F7A76C] text-center mx-44">
+          El énfasis del formulario es clasificar la urgencia y/o estado de las
+          estructuras,instalaciones eléctricas, sumistro de agua potable, etc;
+          clasificándolas en rojo(mucha urgencia o estado deplorable), amarillo
+          (estado de alerta) y verde (en buenas condiciones)
+        </p>
+      </div>
+      <div class="w-72 h-72 flex-2 mr-36 rounded-full shadow-2xl">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/3267/3267470.png"
+          alt="icono de un formulario"
+        />
+      </div>
+    </div>
+
+    <div class="flex items-center">
+      <!--cuarto div hijo-->
+        <div class="w-60 h-60 flex-2 ml-36 mb-20 rounded-full shadow-2xl">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/610/610128.png"
+            alt="icono de un formulario"
+          />
+        </div>
+<div class="flex-1">
+          <p class="font-semibold text-xl text-[#F7A76C] text-center mx-44">
+            La información recopilada del formulario, se podrá visualizar en
+            gráficos para mayor conocimento público,como así ser descargable.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {% endblock %}
+  </div>
+</div>
