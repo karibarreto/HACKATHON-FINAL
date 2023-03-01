@@ -99,7 +99,7 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         return 'Te has registrado'
-    return render_template('index.html', form=form)
+    return render_template('index_k.html', form=form)
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -111,7 +111,7 @@ def login():
             return redirect(url_for('institucion'))
         return "Invalid email or password!"
     
-    return render_template('login.html', form=form)
+    return render_template('login_k.html', form=form)
 
 @app.route('/institucion', methods=['POST', 'GET'])
 def institucion():
@@ -121,7 +121,7 @@ def institucion():
         db.session.add(new_institution)
         db.session.commit()
         return 'Has registrado tu institución'
-    return render_template('institucion.html', form=form)
+    return render_template('institucion_k.html', form=form)
 
 #@app.route('/denuncia_registrada', methods=['POST', 'GET'])
 #def confirmacion():
@@ -176,7 +176,26 @@ def denuncia():
             db.session.commit()
             #return  redirect(url_for('/denuncia_registrada'))
 
-    return render_template('denuncia.html',  inst=inst ,form=form, fecha=fecha, tipo_denuncia=tipo_denuncia)
+    return render_template('denuncia_k.html',  inst=inst ,form=form, fecha=fecha, tipo_denuncia=tipo_denuncia)
+
+# @app.route("/visual")
+# def visual():
+#     lista_rojos = Denuncias_cat.query.filter_by(categoria_id=0).all()
+#     cantidad_rojos = len(lista_rojos)
+    
+#     lista_azul = Asistencia.query.filter_by(asistencia=1).all()
+#     cantidad_azul = len(lista_azul)
+    
+
+#     print(cantidad_rojos)
+
+#      crear diccionario
+#     datos_grafica = {
+#         "colores": ["Rojo", "Amarillo", "Verde"],
+#         "valores": [cantidad_rojos, cantidad_azul, 45]
+#     }
+#     datos_grafica = json.dumps(datos_grafica)
+#     return render_template("visual.html", datos_grafica=datos_grafica)
 
 
 #def index ():
