@@ -1,0 +1,85 @@
+{% extends 'base.html' %} {% block title %} Inicio {% endblock %} {% block
+content %}
+<div class="bg-[#FCF9BE] border-2 border-t-red-600 border-b-red-600">
+  <div>
+    <form method="POST">
+      {{form.hidden_tag()}}
+      <div class="text-center">
+        <div>
+          <div class="mb-6">
+            <label
+              for="large-input"
+              class="block mb-2 mt-8 text-xl font-semibold text-[#FAAB78] text-center"
+              >Institución Educativa</label
+            >
+          </div>
+          <div class="flex justify-center">
+            {{form.departamento(class="block w-1/2 p-4 mb-12 dark:bg-[#E8F3D6]
+            border rounded-full border-white shadow-2xl font-semibold bg-white
+            ease-in-out hover:bg-primary hover:text-[#4E6E81] transform
+            hover:-translate-y-1 hover:scale-110 transition duration-500
+            lg:ml-16")}}
+            <!-- <input
+              type="text"
+              id="large-input"
+              class="block w-1/2 p-4 mb-12 dark:bg-[#E8F3D6] border rounded-full border-white shadow-2xl font-semibold bg-white ease-in-out hover:bg-primary hover:text-[#4E6E81] transform hover:-translate-y-1 hover:scale-110 transition duration-500 lg:ml-16"
+            /> -->
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <div>
+            <label
+              for="default-input"
+              class="block mb-2 text-xl font-semibold text-[#FAAB78] text-cente"
+              >Departamento</label
+            >
+          </div>
+          <div class="flex justify-center">
+            {{form.ciudad(class="block w-1/2 p-4 mb-14 dark:bg-[#E8F3D6] border
+            rounded-full border-white shadow-2xl font-semibold bg-white
+            ease-in-out hover:bg-primary hover:text-[#354259] transform
+            hover:-translate-y-1 hover:scale-110 transition duration-500
+            lg:ml-16")}}
+            <!-- <input
+              type="text"
+              id="default-input"
+              class="block w-1/2 p-4 mb-14 dark:bg-[#E8F3D6] border rounded-full border-white shadow-2xl font-semibold bg-white ease-in-out hover:bg-primary hover:text-[#354259] transform hover:-translate-y-1 hover:scale-110 transition duration-500 lg:ml-16"
+            /> -->
+          </div>
+        </div>
+      </div>
+      <div class="mb-6">
+        <!--comienza tercera caja-->
+        <div>
+          <label
+            for="small-input"
+            class="block mb-2 text-xl font-semibold text-[#FAAB78] text-center"
+            >Ciudad</label
+          >
+        </div>
+        <div class="flex justify-center">
+          {{form.name(class="block w-1/2 p-4 mb-14 dark:bg-[#E8F3D6] border
+          rounded-full border-white shadow-2xl font-semibold bg-white
+          ease-in-out hover:bg-primary hover:text-[#354259] transform
+          hover:-translate-y-1 hover:scale-110 transition duration-500
+          lg:ml-16")}}
+          <!-- <input
+            type="text"
+            id="small-input"
+            class="block w-1/2 p-4 mb-14 dark:bg-[#E8F3D6] border rounded-full border-white shadow-2xl font-semibold bg-white ease-in-out hover:bg-primary hover:text-[#354259] transform hover:-translate-y-1 hover:scale-110 transition duration-500 lg:ml-16"
+          /> -->
+        </div>
+      </div>
+      <div class="flex justify-center">
+        <!--termina tercera caja-->
+        {{form.submit(class="font-semibold text-gray-800 dark:text-white
+        font-medium dark:hover:bg-[#FECD70] text-gray-800 dark:text-white
+        hover:bg-gray-50 rounded-lg text-base px-4 lg:px-5 py-2 lg:py-2.5 mr-2
+        dark:hover:bg-[#FECD70] rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5
+        mr-2 dark:bg-red-600 dark:hover:bg-red-600 ")}}
+      </div>
+    </form>
+  </div>
+  {% endblock %}
+</div>

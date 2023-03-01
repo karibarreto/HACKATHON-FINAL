@@ -7,42 +7,29 @@
       src="https://kit.fontawesome.com/869dc8f5ef.js"
       crossorigin="anonymous"
     ></script>
-    <title>Inicio de Sesión</title>
+    <title>Registro</title>
     <link rel="stylesheet" href="/static/style.css" />
   </head>
   <body>
     <div class="container" id="container">
       <div class="form-container sign-up-container">
-        <form action="#">
+        <form method="POST">
           <h1>Crea tu Cuenta</h1>
           <div class="social-container">
-            <a href="#" class="social>">
+            <a href="#" class="social">
               <i class="fab fa-google" id="black"></i>
             </a>
           </div>
           <span>o usa tu email como registro</span>
-          <input type="text" placeholder="Nombre" />
-          <input type="text" placeholder="Apellido" />
-          <input type="email" placeholder="Correo" />
-          <input type="password" placeholder="Contraseña" />
-          <button id="[#E8F3D6]">Registrar</button>
+          {{ form.hidden_tag() }} {{ form.name(placeholder="Nombre",
+          class="my-class") }} {{ form.email(placeholder="Correo electrónico",
+          class="my-class") }} {{ form.password(placeholder="Contraseña",
+          class="my-class") }} {{ form.submit(id='button') }}
         </form>
       </div>
-      <div class="form-container sign-in-container">
-        <form action="#">
-          <h1>Iniciar Sesión</h1>
-          <div class="social-container">
-            <a href="#" class="social>">
-              <i class="fab fa-google" id="[#E8F3D6]"></i>
-            </a>
-          </div>
-          <span>o usa tu email</span>
-          <input type="email" placeholder="Correo" />
-          <input type="password" placeholder="Contraseña" />
-          <a href="#">¿Olvidaste tu contraseña?</a>
-          <button>Iniciar sesión</button>
-        </form>
-      </div>
+
+      <!-- inicio de sesion -->
+
       <div class="overlay-container">
         <div class="overlay">
           <div class="overlay-panel overlay-left">
@@ -52,18 +39,18 @@
           </div>
           <div class="overlay-panel overlay-right">
             <h1>ReportApp</h1>
-            <p>Crear tu cuenta</p>
-            <button class="ghost" id="signUp">Registrar</button>
           </div>
         </div>
       </div>
     </div>
 
-    <script>
+    <!-- <script>
       const signUpButton = document.getElementById("signUp");
       const signInButton = document.getElementById("signIn");
+      const inicio = document.getElementById("button");
       const container = document.getElementById("container");
 
+      console.log(inicio);
       // Evento para abrir form de registro
       signUpButton.addEventListener("click", () =>
         container.classList.add("right-panel-active")
@@ -73,6 +60,15 @@
       signInButton.addEventListener("click", () =>
         container.classList.remove("right-panel-active")
       );
-    </script>
+
+      // Evento para regresar al form de iniciar sesión
+      inicio.addEventListener("click", () =>
+        container.classList.remove("right-panel-active")
+      );
+      // Evento para abrir form de registro
+      // inicio.addEventListener("click", () =>
+      //   container.classList.add("right-panel-active")
+      // );
+    </script> -->
   </body>
 </html>

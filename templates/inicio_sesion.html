@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inicio de sesion</title>
+    <script
+      src="https://kit.fontawesome.com/869dc8f5ef.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Registro</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="container" id="container">
+      <div class="form-container sign-up-container">
+        <form method="POST">
+          <h1>Iniciar sesión</h1>
+          <div class="social-container">
+            <a href="#" class="social">
+              <i class="fab fa-google" id="black"></i>
+            </a>
+          </div>
+          <span>o usa tu email como registro</span>
+          {{ form.hidden_tag() }} {{form.email(placeholder="Email")}}
+          {{form.password(placeholder="Contraseña")}} {{
+          form.submit(id='button') }}
+        </form>
+      </div>
+
+      <!-- inicio de sesion -->
+
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>¡Bienvenido!</h1>
+            <p>Inicia sesión con tu cuenta</p>
+            <button class="ghost" id="signIn">Inicia sesión</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>ReportApp</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

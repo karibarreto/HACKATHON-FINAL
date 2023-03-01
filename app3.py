@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, EmailField, PasswordField, SubmitField, DateField , SelectField
 from flask_login import LoginManager, UserMixin, login_user, current_user, login_required, logout_user 
+import json
+
 
 app = Flask (__name__) # create server
 app.config['SQLALCHEMY_DATABASE_URI']= 'sqlite:///database.db'
@@ -36,7 +38,7 @@ class Denuncia_Cat(db.Model):
     denuncia_id = db.Column(db.Integer, db.ForeignKey('denuncias.id'))
     categoria_id = db.Column(db.Integer, db.ForeignKey('categorias.id'))
     calificacion = db.Column(db.String(50), nullable=False)
-    descripcion = db.Column(db.String(200), nullable=True)
+    # descripcion = db.Column(db.String(200), nullable=True)
 
 class Denuncias(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
@@ -46,6 +48,7 @@ class Denuncias(db.Model):
 
 #Formularios
 class LoginForm(FlaskForm):
+    name = StringField('name')
     email = EmailField('email')
     password= PasswordField()
     submit=SubmitField('Logueate!')
@@ -59,21 +62,21 @@ class RegisterForm(FlaskForm):
 class DenunciaForm(FlaskForm):
     fecha = DateField('fecha')
     institucion = StringField('institucion')
-    saneamiento_descripcion = StringField('saneamiento_descripcion')
+    # saneamiento_descripcion = StringField('saneamiento_descripcion')
     saneamiento_calificacion = StringField('saneamiento_calificacion')
-    agua_descripcion = StringField('agua_descripcion')
+    # agua_descripcion = StringField('agua_descripcion')
     agua_calificacion = StringField('agua_calificacion')
-    internet_descripcion = StringField('internet_descripcion')
+    # internet_descripcion = StringField('internet_descripcion')
     internet_calificacion = StringField('internet_calificacion')
-    infraestructura_descripcion = StringField('infraestructura_descripcion')
+    # infraestructura_descripcion = StringField('infraestructura_descripcion')
     infraestructura_calificacion = StringField('infraestructura_calificacion')
-    mobiliario_descripcion = StringField('mobiliario_descripcion')
+    # mobiliario_descripcion = StringField('mobiliario_descripcion')
     mobiliario_calificacion = StringField('mobiliario_calificacion')
-    cableado_descripcion = StringField('cableado_descripcion')
+    # cableado_descripcion = StringField('cableado_descripcion')
     cableado_calificacion = StringField('cableado_calificacion')
 
     calificacion = StringField('calificacion')
-    descripcion = StringField('descripcion')
+    # descripcion = StringField('descripcion')
 
     submit = SubmitField('Enviar')
 
@@ -91,8 +94,14 @@ with app.app_context():
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+    
 
-@app.route("/", methods=['POST','GET'])
+
+@app.route("/")
+def index():
+    return render_template('inicio_b.html')
+
+@app.route("/registro", methods=['POST','GET'])
 def register():
     form = RegisterForm()
     
@@ -100,8 +109,9 @@ def register():
         new_user = User(name=form.name.data, email=form.email.data, password=form.password.data)
         db.session.add(new_user)
         db.session.commit()
-        return redirect(url_for('institucion'))
-    return render_template('index_k.html', form=form)
+        return redirect(url_for('login'))
+
+    return render_template('registro.html', form=form)
 
 @app.route('/login', methods=['POST','GET'])
 def login():
@@ -113,9 +123,9 @@ def login():
             print(current_user.id)
             return redirect(url_for('institucion'))
             #return 'me loguee'
-        return "Invalid email or password!"
+        # return "Invalid email or password!"
     
-    return render_template('login_k.html', form=form)
+    return render_template('inicio_sesion.html', form=form)
 
 @app.route('/institucion', methods=['POST','GET'])
 def institucion():
@@ -124,8 +134,9 @@ def institucion():
         new_institucion = Institucion(name=form.name.data, departamento=form.departamento.data, ciudad=form.ciudad.data, user_id=current_user.id)
         db.session.add(new_institucion)
         db.session.commit()
-        return '<h1>se creo una institucion</h1>'
-    return render_template('institucion_k.html', form=form)
+        # return '<h1>se creo una institucion</h1>'
+        return redirect(url_for('denuncia'))
+    return render_template('institucion.html', form=form)
 
 @app.route('/denuncia', methods=['POST','GET'])
 def denuncia():
@@ -145,43 +156,93 @@ def denuncia():
 
         registro = {
             'saneamiento': {
-                'calificacion': form.saneamiento_calificacion.data,
-                'descripcion': form.saneamiento_descripcion.data
+                'calificacion': form.saneamiento_calificacion.data
+                # 'descripcion': form.saneamiento_descripcion.data
             },
             'agua': {
-                'calificacion': form.agua_calificacion.data,
-                'descripcion': form.agua_descripcion.data
+                'calificacion': form.agua_calificacion.data
+                # 'descripcion': form.agua_descripcion.data
             },
             'internet': {
                 'calificacion': form.internet_calificacion.data,
-                'descripcion': form.internet_descripcion.data
+                # 'descripcion': form.internet_descripcion.data
             },
             'infraestructura': {
                 'calificacion': form.infraestructura_calificacion.data,
-                'descripcion': form.infraestructura_descripcion.data
+                # 'descripcion': form.infraestructura_descripcion.data
             },
             "mobiliario": {
                 'calificacion': form.mobiliario_calificacion.data,
-                'descripcion': form.mobiliario_descripcion.data
+                # 'descripcion': form.mobiliario_descripcion.data
             },
             "cableado": {
                 'calificacion': form.cableado_calificacion.data,
-                'descripcion': form.cableado_descripcion.data
+                # 'descripcion': form.cableado_descripcion.data
             }
         }
 
         for tipo in tipo_denuncia:
-            new_denuncia_cat = Denuncia_Cat(denuncia_id=new_denuncia.id, categoria_id=tipo.id, calificacion=registro[tipo.name]['calificacion'], descripcion=registro[tipo.name]['descripcion'])
+            new_denuncia_cat = Denuncia_Cat(denuncia_id=new_denuncia.id, categoria_id=tipo.id, calificacion=registro[tipo.name]['calificacion'])
+            
+            # descripcion=registro[tipo.name]['descripcion']
             db.session.add(new_denuncia_cat)
             db.session.commit()
         
-
         
-        return '<h1>se creo una denuncia jeje</h1>'
-    return render_template('denuncia_k.html', user=user, inst=inst ,form=form, fecha=fecha, tipo_denuncia=tipo_denuncia)
 
-@app.route('/resumen_denuncia/<int:denuncia_id>')
+        # return redirect(f'visual/{new_denuncia.id}')
+        return redirect(f'imprimir/{new_denuncia.id}')
+        # return '<h1>se creo una denuncia jeje</h1>'
+    return render_template('denuncia.html', user=user, inst=inst ,form=form, fecha=fecha, tipo_denuncia=tipo_denuncia)
+
+# @app.route("/visual")
+# def visual():
+#     lista_rojos = Denuncia_Cat.query.filter_by(calificacion='rojo').all()
+#     cantidad_rojos = len(lista_rojos)
+
+#     lista_amarillos = Denuncia_Cat.query.filter_by(calificacion='amarillo').all()
+#     cantidad_amarillos = len(lista_amarillos)
+
+#     lista_verdes = Denuncia_Cat.query.filter_by(calificacion='verde').all()
+#     cantidad_verdes = len(lista_verdes)
+
+
+    
+#     # crear diccionario
+#     datos_grafica = {
+#         "colores": ["Rojo", "Amarillo", "Verde"],
+#         "valores": [cantidad_rojos, cantidad_verdes, cantidad_amarillos]
+#     }
+
+#     datos_grafica = json.dumps(datos_grafica)
+
+#     return render_template("visual.html", datos_grafica=datos_grafica)
+
+
+
+@app.route('/visual/<int:denuncia_id>')
 def resumen(denuncia_id):
+    # grafico
+    lista_rojos = Denuncia_Cat.query.filter_by(calificacion='rojo').all()
+    cantidad_rojos = len(lista_rojos)
+
+    lista_amarillos = Denuncia_Cat.query.filter_by(calificacion='amarillo').all()
+    cantidad_amarillos = len(lista_amarillos)
+
+    lista_verdes = Denuncia_Cat.query.filter_by(calificacion='verde').all()
+    cantidad_verdes = len(lista_verdes)
+
+
+    
+    # crear diccionario
+    datos_grafica = {
+        "colores": ["Rojo", "Amarillo", "Verde"],
+        "valores": [cantidad_rojos, cantidad_verdes, cantidad_amarillos]
+    }
+
+    datos_grafica = json.dumps(datos_grafica)
+
+    # Datos de la persona
     denuncia = Denuncias.query.filter_by(id=denuncia_id).first()
     denuncia_cat = Denuncia_Cat.query.filter_by(denuncia_id=denuncia_id).all()
     nombre = current_user.name
@@ -211,15 +272,105 @@ def resumen(denuncia_id):
         categoria_name = Categorias.query.filter_by(id=denuncia.categoria_id).first()
         print(f'Categoria: {categoria_name.name}')
         print(f'Calificacion: {denuncia.calificacion}')
-        print(f'Descripcion: {denuncia.descripcion}')
+        # print(f'Descripcion: {denuncia.descripcion}')
         print('------------------------------')
         datos["categorias"][categoria_name.name] = {
-            "calificacion" : denuncia.calificacion,
-            "descripcion" : denuncia.descripcion
+            "calificacion" : denuncia.calificacion
+            # "descripcion" : denuncia.descripcion
         }
 
     print(datos)
-    return render_template('resumen_denuncia.html', denuncia=denuncia, denuncia_cat=denuncia_cat , datos=datos)
+    return render_template("visual.html", datos_grafica=datos_grafica, denuncia=denuncia, denuncia_cat=denuncia_cat , datos=datos)
+
+
+@app.route('/imprimir/<int:denuncia_id>')
+def imprimir(denuncia_id):
+    # grafico
+    lista_rojos = Denuncia_Cat.query.filter_by(calificacion='rojo').all()
+    cantidad_rojos = len(lista_rojos)
+
+    lista_amarillos = Denuncia_Cat.query.filter_by(calificacion='amarillo').all()
+    cantidad_amarillos = len(lista_amarillos)
+
+    lista_verdes = Denuncia_Cat.query.filter_by(calificacion='verde').all()
+    cantidad_verdes = len(lista_verdes)
+
+
+    
+    # crear diccionario
+    datos_grafica = {
+        "colores": ["Rojo", "Amarillo", "Verde"],
+        "valores": [cantidad_rojos, cantidad_verdes, cantidad_amarillos]
+    }
+
+    datos_grafica = json.dumps(datos_grafica)
+
+    # Datos de la persona
+    denuncia = Denuncias.query.filter_by(id=denuncia_id).first()
+    denuncia_cat = Denuncia_Cat.query.filter_by(denuncia_id=denuncia_id).all()
+    nombre = current_user.name
+    fecha = denuncia.fecha
+    institucion = Institucion.query.filter_by(id=denuncia.institucion_id).first()
+    departamento = institucion.departamento
+    ciudad = institucion.ciudad
+
+
+    datos = {
+        "nombre" : nombre,
+        "fecha" : fecha,
+        "institucion" : institucion.name,
+        "departamento" : departamento,
+        "ciudad" : ciudad,
+        "categorias" : {}
+    }
+
+    print('------------------------------')
+    print(f'nombre: {nombre}')
+    print(f'fecha: {fecha}')
+    print(f'institucion: {institucion.name}')
+    print(f'departamento: {departamento}')
+    print(f'ciudad: {ciudad}')
+    print('------------------------------')
+    for denuncia in denuncia_cat:
+        categoria_name = Categorias.query.filter_by(id=denuncia.categoria_id).first()
+        print(f'Categoria: {categoria_name.name}')
+        print(f'Calificacion: {denuncia.calificacion}')
+        # print(f'Descripcion: {denuncia.descripcion}')
+        print('------------------------------')
+        datos["categorias"][categoria_name.name] = {
+            "calificacion" : denuncia.calificacion
+            # "descripcion" : denuncia.descripcion
+        }
+
+    print(datos)
+    return render_template("imprimir.html", datos_grafica=datos_grafica, denuncia=denuncia, denuncia_cat=denuncia_cat , datos=datos)
+
+
+# @app.route("/imprimir/<int:denuncia_id>")
+# def imprimir(denuncia_id):
+#     ultimo_registro = Denuncia_Cat[-1]
+#     lista_rojos = ultimo_registro.query.filter_by(calificacion='choputa').all()
+#     cantidad_rojos = len(lista_rojos)
+    
+#     lista_amarillos = ultimo_registro.query.filter_by(calificacion='normal').all()
+#     cantidad_amarillos = len(lista_amarillos)
+
+#     lista_verdes = ultimo_registro.query.filter_by(calificacion='excelente').all()
+#     cantidad_verdes = len(lista_verdes)
+    
+
+#     # print(cantidad_rojos)
+
+#     # crear diccionario
+#     datos_grafica = {
+#         "colores": ["Rojo", "Amarillo", "Verde"],
+#         "valores": [cantidad_rojos, cantidad_verdes, cantidad_amarillos]
+#     }
+
+#     datos_grafica = json.dumps(datos_grafica)
+
+#     return render_template("imprimir.html", datos_grafica=datos_grafica)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <h1 class="datos">
+      Control ciudadano del estado de la infraestructura del total de colegios
+    </h1>
+
+    <div>
+      <canvas id="myChart"></canvas>
+      <canvas id="pieChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      const grafico = document.getElementById("myChart");
+      const grafico2 = document.getElementById("pieChart");
+
+      const datos_json = JSON.parse(
+        "{{ datos_grafica }}".replace(/&#34;/g, '"')
+      );
+
+      new Chart(grafico, {
+        type: "pie",
+        data: {
+          labels: ["Rojo", "Amarillo", "Verde"],
+          datasets: [
+            {
+              label: "# of Votes",
+              data: datos_json.valores,
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
+      new Chart(grafico2);
+    </script>
+  </body>
+</html>
